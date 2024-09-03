@@ -1,0 +1,917 @@
+{
+	"info": {
+		"_postman_id": "f172eb29-79f5-4fad-985d-6eea58ee8c7a",
+		"name": "Auth- user address testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34925631"
+	},
+	"item": [
+		{
+			"name": "Sign in",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "As a user, I should be able to loginto the e commerce application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Buyer able to login successfully\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body matches the success key, token\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validated the response headers\", function () {\r",
+											"    pm.response.to.have.header(\"Server\");\r",
+											"    pm.response.to.have.header(\"Date\");\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"    pm.response.to.have.header(\"Content-Length\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Buyer able to login within 1500ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE1OTc4NTM1LCJleHAiOjE3MTYwNjQ5MzV9.LDhJNRp9d5RrUvufMFdSTLk2vufJZJCTtCN60xBhcpk"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"Test@123\",\r\n  \"email\": \"ipostesting911@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user/signin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "As a user, I shouldnt be able to loginto the e commerce application with invalid email id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"password should be blank\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"pm.test(\"Password is blank\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"password\");\r",
+											"});\r",
+											"pm.test(\"Content-Please provide a passwordType is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE1OTc4NTM1LCJleHAiOjE3MTYwNjQ5MzV9.LDhJNRp9d5RrUvufMFdSTLk2vufJZJCTtCN60xBhcpk"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"\",\r\n  \"email\": \"ipostesting911@gmail.comm\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signin",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Date : June 2/24\n\nuser Story : sign In functionality\n\nSE : Zhenjian\n\nTester : Devi\n\nReviwer : Garry\n\nTest Result : Buyer was able to successfully sign in\n\nTest Status : Passed\n\n**Test Data**\n\n| **Name** | **State** | **Location** | **Zipcode** | **Phone number** | **Email id** |\n| --- | --- | --- | --- | --- | --- |\n| devi | mi | farmington hills | 48188 | 2483789497 | [devichandanamb@gmail.com](https://mailto:devichandanamb@gmail.com) |\n\n| **Functionalities Tested** | **Result** |\n| --- | --- |\n| Sign In | Passed |\n| Add Address | Passed |\n| Get address | Passed |\n| Update Address | Passed |\n| Delete address | Passed |"
+		},
+		{
+			"name": "Add Address",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "As a user, I should be able to add address in the e commerce application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Fixed TypeError: pm.response is not a function\r",
+											"pm.test(\"Buyer able to add the address successfully\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response body should match the key\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"true\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"var jsonData = pm.response.json();\r",
+											"pm.environment.set(\"address_id\", jsonData.id);\r",
+											"pm.environment.set(\"auth_token\", jsonData.token);\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzI0ODc4MDM0LCJleHAiOjE3MjQ5NjQ0MzR9.smAApHyIAIgC0JQqlmcqJCize47WzEGazGcreo6R4z8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"mobileNumber\": \"786587465554\",\n  \"state\": \"California\",\n  \"city\": \"canton\",\n  \"zip\": \"48188\",\n  \"address\": \"43806 cherry grove ct e\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/address/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"address",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I should be able to add address in the e commerce application Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson = pm.response.json();\r",
+											"var token = responseJson.token; // Adjust according to your response structure\r",
+											"pm.environment.set(\"auth_token\", token);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{auth_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"mobileNumber\": \"786587465554\",\n  \"state\": \"California\",\n  \"city\": \"canton\",\n  \"zip\": \"48188\",\n  \"address\": \"43806 cherry grove ct e\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/address/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"address",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "As a user, I shouldnt be able to add the address in the e commerce application without valid zip code Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"user cannot enter invalid zipcode in address field\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"pm.test(\"invalid zip code\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"zip\");\r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE5OTM5Mzc3LCJleHAiOjE3MjAwMjU3Nzd9.h596Yv3uciNkL2MAEvVsC65WVPzdORhHL2AJ66tiwf4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE1OTc4NTM1LCJleHAiOjE3MTYwNjQ5MzV9.LDhJNRp9d5RrUvufMFdSTLk2vufJZJCTtCN60xBhcpk"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"jhanvi\",\r\n  \"mobileNumber\": \"23146278300\",\r\n  \"state\": \"illinois\",\r\n  \"city\": \"chicago\",\r\n  \"zip\": \"dsjghv\",\r\n  \"address\": \"68396 karl dr\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/address/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"address",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I shouldnt be able to see address in the e commerce application without valid phone number Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"user cannot enter invalid phone number in address field\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"invalid phone number\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE5OTM5Mzc3LCJleHAiOjE3MjAwMjU3Nzd9.h596Yv3uciNkL2MAEvVsC65WVPzdORhHL2AJ66tiwf4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE3MzI0MjQ2LCJleHAiOjE3MTc0MTA2NDZ9.l9x1yIsQgGmx0IsXb_es5d32lKSc5xMNC-iTQXBSw5U"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"janu\",\r\n  \"mobileNumber\": \"4556799543m3\",\r\n  \"state\": \"michigan\",\r\n  \"city\": \"novi\",\r\n  \"zip\": \"67865\",\r\n  \"address\": \"gvnxnvx \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/address/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"address",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I shouldnt be able to add the address in the e commerce application when user name is empty Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"user cannot add address without user name\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"pm.test(\"invalid phone number\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE5OTM5Mzc3LCJleHAiOjE3MjAwMjU3Nzd9.h596Yv3uciNkL2MAEvVsC65WVPzdORhHL2AJ66tiwf4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE3MzI0MjQ2LCJleHAiOjE3MTc0MTA2NDZ9.l9x1yIsQgGmx0IsXb_es5d32lKSc5xMNC-iTQXBSw5U"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"\",\r\n  \"mobileNumber\": \"45567995433\",\r\n  \"state\": \"michigan\",\r\n  \"city\": \"novi\",\r\n  \"zip\": \"67865\",\r\n  \"address\": \"gvnxnvx \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/address/create",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"address",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "data driven",
+					"item": [
+						{
+							"name": "As a user, I should be able to add address in the e commerce application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Buyer able to add the address successfully\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											" \r",
+											"pm.test(\"response body should match the key\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"true\");\r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE5OTM5Mzc3LCJleHAiOjE3MjAwMjU3Nzd9.h596Yv3uciNkL2MAEvVsC65WVPzdORhHL2AJ66tiwf4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{username}}\",\n  \"mobileNumber\": \"{{mobile_number}}\",\n  \"state\": \"{{state}}\",\n  \"city\": \"{{city}}\",\n  \"zip\": \"48335\",\n  \"address\": \"{{address}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/address/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"address",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get Address",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "As a user, I should be able to add address in the e commerce application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"addresses\");\r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE5OTM5Mzc3LCJleHAiOjE3MjAwMjU3Nzd9.h596Yv3uciNkL2MAEvVsC65WVPzdORhHL2AJ66tiwf4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE3MzI0MjQ2LCJleHAiOjE3MTc0MTA2NDZ9.l9x1yIsQgGmx0IsXb_es5d32lKSc5xMNC-iTQXBSw5U"
+									}
+								],
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/address/getaddress",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"address",
+										"getaddress"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Update Address",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "As a user, I should be able to update existing address in the e commerce application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE5OTM5Mzc3LCJleHAiOjE3MjAwMjU3Nzd9.h596Yv3uciNkL2MAEvVsC65WVPzdORhHL2AJ66tiwf4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE3MDgwMzE1LCJleHAiOjE3MTcxNjY3MTV9.hB3vACzNEzhHw3SLqd_DGRIZQH_B02ar3KqbdRVRXTE"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"malapushpa\",\r\n  \"mobileNumber\": \"2434323628\",\r\n  \"state\": \"texas\",\r\n  \"city\": \"farmington hills\",\r\n  \"zip\": \"48589\",\r\n  \"address\": \"6507 palmilla dr\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/address/update/665893de2fecb81a9dd90006",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"address",
+										"update",
+										"665893de2fecb81a9dd90006"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Delete Address",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "https://staging-be-ecom.techserve4u.com/api/address/delete/d",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE5ODQ3ODQyLCJleHAiOjE3MTk5MzQyNDJ9.QS7u7Zoy6qXKKLZgELVV2pcZtJX_nhTHxpTl07a0pp0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE3MzI0MjQ2LCJleHAiOjE3MTc0MTA2NDZ9.l9x1yIsQgGmx0IsXb_es5d32lKSc5xMNC-iTQXBSw5U"
+									}
+								],
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/address/delete/665891bc2fecb81a9dd8fff7",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"address",
+										"delete",
+										"665891bc2fecb81a9dd8fff7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM5MzlhNDJmZWNiODFhOWRkODQ4ZWMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiaXBvc3Rlc3Rpbmc5MTFAZ21haWwuY29tIiwiaWF0IjoxNzE3MDgwMzE1LCJleHAiOjE3MTcxNjY3MTV9.hB3vACzNEzhHw3SLqd_DGRIZQH_B02ar3KqbdRVRXTE",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
